@@ -44,7 +44,8 @@ const sync = async () => {
 
 module.exports = {
   models: {
-    Message
+    Message,
+    Author
   },
   sync
 }

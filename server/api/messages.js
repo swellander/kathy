@@ -1,17 +1,28 @@
 const router = require('express').Router();
-const { Message } = require('../db').models;
+const { Message, Author } = require('../db').models;
 
 router.get('/', (req, res, next) => {
-  Message.findAll()
+  Message.findAll({
+    include: [{ model: Author }]
+  })
     .then(messages => res.json(messages))
     .catch(next)
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
   //TODO: connect new message with its author
-  Message.create(req.body)
-    .then(newMessage => res.json(newMessage))
-    .catch(() => res.send(req.body))
+
+  const { authorName } = req.body;
+  const [author] = await Author.findOrCreate({
+    where: {
+      name: authorName
+    }
+  })
+
+  const message = await Message.build(req.body);
+  message.setAuthor(author);
+  message.save();
+  res.json(message);
 });
 
 module.exports = router;
