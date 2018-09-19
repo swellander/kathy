@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
+import Message from './Message';
 import { connect } from 'react-redux';
 import { _loadMessages } from '../store';
 
 class MessageList extends Component {
   componentDidMount() {
     this.props.loadMessages();
+    console.log('loading');
   }
 
+
   render() {
+    const divStyle = {
+      display: 'flex',
+      flexDirection: 'column'
+    }
     return (
-      <div>
+      <div style={divStyle}>
         {this.props.messages.map(message => (
-          <p key={message.id}>{message.content}</p>
+          <Message key={message.id} message={message} />
         ))}
       </div>
     )

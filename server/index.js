@@ -2,7 +2,18 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
-const server = app.listen(port, () => console.log(`listening on port ${port}`));
+const db = require('./db');
+
+let server;
+const init = () => {
+  db.sync()
+    .then(() => {
+      server = app.listen(port, () => console.log(`listening on port ${port}`));
+    })
+    .catch(err => console.log(err))
+}
+
+init();
 
 //socket setup
 const socket = require('socket.io');
