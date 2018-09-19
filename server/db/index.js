@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
 const conn = new Sequelize(
   process.env.DATABASE_URL ||
-  'postgres://localhost/brochat'
+  'postgres://localhost/brochat',
+  { logging: false }
 )
 
 //TODO: create an Author model (plus seed data). Author has many messages, Message belongs to Author
