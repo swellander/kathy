@@ -1,8 +1,12 @@
 import React from 'react';
 import MessageList from './MessageList';
+import Textbox from './Textbox'
 
 export default () => {
   return (
-    <MessageList />
+  	<div>
+      <MessageList />
+      <Textbox />
+    </div>
   )
 };
