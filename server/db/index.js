@@ -13,14 +13,32 @@ const Message = conn.define('message', {
   }
 });
 
+const Author = conn.define('author', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+});
+
+
+//Associations
+Message.belongsTo(Author);
 
 const sync = async () => {
   await conn.sync({ force: true })
-  return Promise.all([
+  const [msg1, msg2, msg3] = await Promise.all([
     Message.create({ content: 'Wooo this is dope' }),
     Message.create({ content: 'Lebron Space jammin' }),
     Message.create({ content: 'Sometimes I just get the feeling, deep within my bones.' }),
-  ])
+  ]);
+  const [sam, kev] = await Promise.all([
+    Author.create({ name: 'Sam' }),
+    Author.create({ name: 'Kev' }),
+  ]);
+
+  msg1.setAuthor(sam);
+  msg2.setAuthor(sam);
+  msg3.setAuthor(kev);
 }
 
 module.exports = {
