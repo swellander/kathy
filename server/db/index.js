@@ -11,7 +11,8 @@ const Message = conn.define('message', {
     type: Sequelize.STRING,
     allowNull: false
   }
-})
+});
+
 
 const sync = async () => {
   await conn.sync({ force: true })
