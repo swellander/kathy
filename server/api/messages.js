@@ -1,8 +1,10 @@
 const router = require('express').Router();
-const { Message } = require('../db').models;
+const { Message, Author } = require('../db').models;
 
 router.get('/', (req, res, next) => {
-  Message.findAll()
+  Message.findAll({
+    include: [{ model: Author }]
+  })
     .then(messages => res.json(messages))
     .catch(next)
 });
