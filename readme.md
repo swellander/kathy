@@ -15,3 +15,9 @@ npm run start
 
 ## Don't forget:
 Whenever you come back to the project, before making any new changes run `git pull origin master` from your master branch to make sure that your version is in sync with everyone else's. 
+
+## Todo
+- [ ] Build out testing
+- [ ] UI | associate authors with their messages
+- [ ] Add channels
+- [ ] Prettify UI
