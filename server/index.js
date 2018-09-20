@@ -8,7 +8,7 @@ let server;
 const init = () => {
   db.sync()
     .then(() => {
-      server = app.listen(port, () => console.log(`listening on port ${port}`));
+      server = app.listen(port, () => console.log(`Listening on port ${port}. I see you Sam.`));
     })
     .catch(err => console.log(err))
 }
