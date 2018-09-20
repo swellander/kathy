@@ -29,4 +29,33 @@ router.post('/', async (req, res, next) => {
   // res.json(message);
 });
 
+router.put('/edit/:id', async (req, res, next) => {
+  try{
+    const message = await Message.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [{
+        model: [Author]
+      }]
+    })
+    const [number, messageToEdit] = message.update({
+      content: req.body.content
+    })
+    res.send(messageToEdit)
+  }
+  catch(err) next(err)
+})
+
+router.delete('/:id', (req, res, next) => {
+  Message.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(message => Message.destroy(product))
+  .then(() => res.sendStatus(204).end())
+  .catch(next)
+})
+
 module.exports = router;
