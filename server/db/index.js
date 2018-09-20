@@ -24,6 +24,7 @@ const Author = conn.define('author', {
 
 //Associations
 Message.belongsTo(Author);
+Author.hasMany(Message);
 
 const sync = async () => {
   await conn.sync({ force: true })
