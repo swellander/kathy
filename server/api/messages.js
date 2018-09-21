@@ -44,7 +44,7 @@ router.put('/edit/:id', async (req, res, next) => {
     })
     res.send(messageToEdit)
   }
-  catch(err) next(err)
+  catch(err) {next(err)}
 })
 
 router.delete('/:id', (req, res, next) => {
@@ -53,7 +53,10 @@ router.delete('/:id', (req, res, next) => {
       id: req.params.id
     }
   })
-  .then(message => Message.destroy(product))
+  .then(message => {
+    console.log(message)
+    message.destroy()
+  })
   .then(() => res.sendStatus(204).end())
   .catch(next)
 })

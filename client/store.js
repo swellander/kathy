@@ -12,6 +12,7 @@ const initialState = {
 const LOAD_MESSAGES = 'LOAD_MESSAGES';
 const WRITE_MSG = 'WRITE_MSG'
 const ADD_MSG = 'ADD_MSG'
+const DELETE_MSG = 'DELETE_MSG'
 
 //Action creators 
 export const loadMessages = messages => ({ 
@@ -26,6 +27,11 @@ export const writeMsg = content => ({
 
 export const addMsg = msg => ({
   type: ADD_MSG,
+  msg
+})
+
+export const deleteMsg = msg => ({
+  type: DELETE_MSG,
   msg
 })
 
@@ -49,6 +55,13 @@ export const _submitMsg = (msg) => async dispatch => {
   dispatch(action)
 }
 
+export const _deleteMsg = (msg) => async dispatch => {
+  const response = await axios.delete(`/api/messages/${msg.id}`)
+  const action = deleteMsg(msg)
+  dispatch(action)
+}
+
+
 //Reducer
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -68,6 +81,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         messages: [...state.messages, action.msg],
         msgEntry: ''
+      }
+
+    case DELETE_MSG:
+    const msgs = state.messages.filter(message => message.id !== action.msg.id)
+      return {
+        ...state,
+        messages: msgs
       }
 
     default:
